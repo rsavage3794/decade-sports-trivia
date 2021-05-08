@@ -8,12 +8,14 @@ let answerButtonsElement = document.getElementById("answer-buttons")
 let randomQuestions
 let currentQuestionIndex
 
+// Click "Start" to start the game
 startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++
     setNextQuestion()
 })
 
+// First question appears (randomly because of the randomQuestions function)
 function startGame() {
     ;
     startButton.classList.add("hide")
@@ -23,11 +25,13 @@ function startGame() {
     setNextQuestion()
 }
 
+// Once next is clicked - player is redirected to next random question
 function setNextQuestion() {
     resetState()
     showQuestion(randomQuestions[currentQuestionIndex])
 }
 
+// display question and answers - allows player to click on answers
 function showQuestion(question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
@@ -42,6 +46,7 @@ function showQuestion(question) {
     });
 }
 
+// next button disappears once a new question is displayed
 function resetState() {
     clearStatusClass(document.body)
     nextButton.classList.add("hide")
@@ -225,4 +230,40 @@ let questions = [
             { text: "Ed Belfour", correct: false }
             ]
     },
+    {
+    question: "Who became became the first ever unanimous NBA MVP?",
+    answers: [
+        { text: "Lebron James (2013)", correct: false },
+        { text: "Kevin Durant (2014)", correct: false },
+        { text: "Russell Westbrook (2017)", correct: false },
+        { text: "Stephen Curry (2015)", correct: true }
+    ]
+    },
+    {
+    question: "Which NHL franchise became the first team in nearly 20 years to win back to back Stanley Cups in 2017?",
+    answers: [
+        { text: "Chicago Blackhawks", correct: false },
+        { text: "Los Angeles Kings", correct: false },
+        { text: "Pittsburgh Penguins", correct: true },
+        { text: "Boston Bruins", correct: false }
+    ]
+    },
+    {
+        question: "Who became the first MLB Triple Crown winner in 45 years?",
+        answers: [
+            { text: "Josh Hamilton (2010)", correct: false },
+            { text: "Miguel Cabrera (2012)", correct: true },
+            { text: "Christian Yelich (2019)", correct: false },
+            { text: "Mookie Betts (2018)", correct: false }
+        ]
+    },
+    {
+        question: "Which NFL franchise became the first team with less than 10 regular season wins to win the Super Bowl?",
+        answers: [
+            { text: "2010 Green Bay Packers", correct: false },
+            { text: "2012 Baltimore Ravens", correct: false },
+            { text: "2018 New England Patriots", correct: false },
+            { text: "2011 New York Giants", correct: true }
+        ]
+    }
 ]
