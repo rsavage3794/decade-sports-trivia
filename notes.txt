@@ -1,0 +1,16 @@
+<div class = "question">starting value</div>
+<div class = "answer"> starting value</div>
+const questionBox = document.querySelector(".questions")
+
+const nextBox = document.querySelector(".next")
+
+nextBox.addEventListener
+
+
+Need Help with:
+text display on right/wrong answer
+separating questions by decade if possible
+wrong answer count
+how to commit to personal github
+
+CSS tricks - for grid styling
