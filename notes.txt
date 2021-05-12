@@ -11,9 +11,8 @@ Need Help with:
 text display on right/wrong answer
 separating questions by decade if possible
 wrong answer count
+
 how to commit to personal github
     git add .
     git commit -m "decade-sport-trivia"
     git push origin main
-
-CSS tricks - for grid styling

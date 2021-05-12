@@ -53,6 +53,7 @@ body.wrong {
     padding: 5px 10px;
     color: white;
     outline: none;
+    z-index: 0;
 }
 
 .btn:hover {
@@ -72,6 +73,7 @@ body.wrong {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 10px 20px;
+    z-index: 0;
 }
 
 .controls {
@@ -82,4 +84,21 @@ body.wrong {
 
 .hide {
     display: none;
+}
+
+h1 {
+    display: flex;
+    position: absolute;
+    color: white;
+    padding: 0 0 400px 0;
+    font-size: 6rem;
+    text-align: center;
+}
+
+p {
+    display: flex;
+    position: absolute;
+    color: white;
+    padding: 350px 0 0 110px;
+    font-size: 1rem;
 }
