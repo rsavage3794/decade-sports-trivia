@@ -37,6 +37,8 @@ let seventiesQuestions = [
     }
 ]
 
+let currentQuestionsAsk = []
+
 let eightiesQuestions = [
     {    
         question: "Which quarterback threw the most touchdown passes in the 1980s?",
@@ -204,12 +206,7 @@ let answerButtonsElement = document.getElementById("answer-buttons")
 let randomQuestions
 let currentQuestionIndex
 
-var score;
-function keepScore() {
-    if (answers.correct === true) {
-        score++
-    }
-}
+var score
 let decadeCounter = 0
 
 // Click "Start" to start the game
@@ -243,42 +240,45 @@ nextButton.addEventListener("click", () => {
 // First question appears (randomly because of the randomQuestions function)
 function startGame() {
     startButton.classList.add("hide")
-    randomQuestions = Math.random() * allQuestions.length //this is doing nothing right now
-    currentQuestionIndex = 0
+    currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
     questionContainerElement.classList.remove("hide")
-    score = new component("30px", "Courier", "white", 280, 40, "text")
-    setNextSeventiesQuestion()
+    console.log(currentQuestionIndex);
+    currentQuestionsAsk.push(currentQuestionIndex)
+    setNextSeventiesQuestion(currentQuestionIndex)
 }
 
 // Once next is clicked - player is redirected to next random question
 function setNextSeventiesQuestion() {
     resetState()
-    showQuestion(seventiesQuestions[currentQuestionIndex])
+    let q = seventiesQuestions.splice(Math.floor(Math.random() * seventiesQuestions.length), 1)
+    showQuestion(q[0])
+    console.log(q);
 }
 
 function setNextEightiesQuestion() {
     resetState()
-    showQuestion(eightiesQuestions[currentQuestionIndex])
+    let q = eightiesQuestions.splice(Math.floor(Math.random() * eightiesQuestions.length), 1)
+    showQuestion(q[0])
 }
 
 function setNextNinetiesQuestion() {
     resetState()
-    showQuestion(ninetiesQuestions[currentQuestionIndex])
+    let q = ninetiesQuestions.splice(Math.floor(Math.random() * ninetiesQuestions.length), 1)
+    showQuestion(q[0])
 }
 
 function setNextZerosQuestion() {
     resetState()
-    showQuestion(zerosQuestions[currentQuestionIndex])
+    let q = zerosQuestions.splice(Math.floor(Math.random() * zerosQuestions.length), 1)
+    showQuestion(q[0])
 }
 
 function setNextTensQuestion() {
     resetState()
-    showQuestion(tensQuestions[currentQuestionIndex])
+    let q = tensQuestions.splice(Math.floor(Math.random() * tensQuestions.length), 1)
+    showQuestion(q[0])
 }
 
-// goToNineties = Math.random() * ninetiesQuestions.length)
-// goToZeros = Math.random() * zerosQuestions.length)
-// goToTens = Math.random() * tensQuestions.length)
 // display question and answers - allows player to click on answers
 function showQuestion(question) {
     for (let i = 0; i < question.answers.length; i++) {
@@ -327,9 +327,9 @@ function selectAnswer(e) {
         startButton.innerText = "Restart"
         startButton.classList.remove("hide")
     } 
-    if (correct = true) {
-        score +=1
-    }
+    // if (correct = true) {
+    //     score +=1
+    // }
 }
 
 function setStatusClass(element, correct) {
@@ -347,6 +347,8 @@ function clearStatusClass(element) {
 }
 
 function gameOver(e) {
-    startButton.innerText = "Play Again"
+    resetState()
+    startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
+    nextButton.classList.add("hide")
 }
