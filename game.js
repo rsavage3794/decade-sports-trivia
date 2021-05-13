@@ -202,6 +202,7 @@ let nextButton = document.getElementById("next-btn")
 let questionContainerElement = document.getElementById("question-container")
 let questionElement = document.getElementById("question")
 let answerButtonsElement = document.getElementById("answer-buttons")
+let totalScore = document.getElementById("score")
 
 let randomQuestions
 let currentQuestionIndex
@@ -338,6 +339,7 @@ function selectAnswer(e) {
     if (correct) {
         currentDecadeScore += 1
         console.log(currentDecadeScore);
+        totalScore.innerText = currentDecadeScore
     }
 }
 
