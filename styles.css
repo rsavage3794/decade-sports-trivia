@@ -80,13 +80,14 @@ body.wrong {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 .hide {
     display: none;
 }
 
-h1 {
+.title {
     display: flex;
     position: absolute;
     color: white;
@@ -101,4 +102,13 @@ p {
     color: white;
     padding: 350px 0 0 110px;
     font-size: 1rem;
+}
+
+h1 {
+    display: flex;
+    position: absolute;
+    color: white;
+    padding: 0 0 800px 800px;
+    font-size: 2rem;
+    text-align: center;
 }

@@ -17,7 +17,5 @@ how to commit to personal github
     git commit -m "decade-sport-trivia"
     git push origin main
 
-    scoreboard
-    randomize questions within decade (Math.random)
+    link scoreboard to currentDecadeScore
     make it so that player has to get at least 2 questions right in order to move on to the next decade
-    gameOver function - make the question at the end disappear

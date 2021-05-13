@@ -205,18 +205,32 @@ let answerButtonsElement = document.getElementById("answer-buttons")
 
 let randomQuestions
 let currentQuestionIndex
+let currentDecadeScore = 0
 
-var score
+var innerScore = document.querySelector(".game-score")
+
+let score = 0
 let decadeCounter = 0
 
 // Click "Start" to start the game
 startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
+    console.log(currentQuestionsAsk);
     currentQuestionIndex++
-    if (4 == currentQuestionIndex) {
+    if (4 == currentQuestionsAsk.length && currentDecadeScore >= 2) {
         currentQuestionIndex = 0
         decadeCounter++
+        currentQuestionsAsk = []
     }
+    if (4 == currentQuestionsAsk.length && currentDecadeScore < 2) { 
+        currentQuestionIndex = 0
+        currentQuestionsAsk = 0
+    }
+    // if (currentDecadeScore == 2) {
+    //     currentQuestionIndex = 0
+    //     decadeCounter++
+    //     currentQuestionsAsk = []
+    // }
     if (decadeCounter == 0) {
         setNextSeventiesQuestion()
     }
@@ -243,7 +257,7 @@ function startGame() {
     currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
     questionContainerElement.classList.remove("hide")
     console.log(currentQuestionIndex);
-    currentQuestionsAsk.push(currentQuestionIndex)
+    // currentQuestionsAsk.push(currentQuestionIndex)
     setNextSeventiesQuestion(currentQuestionIndex)
 }
 
@@ -293,13 +307,6 @@ function showQuestion(question) {
         }
         button.addEventListener("click", selectAnswer)
         answerButtonsElement.appendChild(button) 
-        // if (score >= 2) {
-        //     goToEighties()
-        // }
-        // else {
-        //     score <= 1
-        //     startGame()
-        // }
     }
 }
 
@@ -315,21 +322,23 @@ function resetState() {
 }
 
 function selectAnswer(e) {
+    currentQuestionsAsk.push(currentQuestionIndex)
     let selectedButton = e.target
     let correct = selectedButton.dataset.correct
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })
-    if (allQuestions.length > currentQuestionIndex + 1) {
+    if (allQuestions.length > decadeCounter) {
         nextButton.classList.remove("hide")
     } else {
         startButton.innerText = "Restart"
         startButton.classList.remove("hide")
     } 
-    // if (correct = true) {
-    //     score +=1
-    // }
+    if (correct) {
+        currentDecadeScore += 1
+        console.log(currentDecadeScore);
+    }
 }
 
 function setStatusClass(element, correct) {
@@ -347,7 +356,6 @@ function clearStatusClass(element) {
 }
 
 function gameOver(e) {
-    resetState()
     startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
     nextButton.classList.add("hide")
