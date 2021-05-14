@@ -204,8 +204,8 @@ let questionContainerElement = document.getElementById("question-container")
 let questionElement = document.getElementById("question")
 let answerButtonsElement = document.getElementById("answer-buttons")
 let totalScore = document.getElementById("score")
+let gameStatus = false
 
-let randomQuestions
 let currentQuestionIndex
 let currentScore = 0
 
@@ -302,6 +302,7 @@ nextButton.addEventListener("click", () => {
 
 // First question appears (randomly because of the randomQuestions function)
 function startGame() {
+    gameStatus = true
     decadeCounter = 0
     currentQuestionsAsk = []
     startButton.classList.add("hide")
@@ -345,15 +346,16 @@ function setNextTensQuestion() {
 // display question and answers - allows player to click on answers
 function showQuestion(question) {
     for (let i = 0; i < question.answers.length; i++) {
-        // Math.random() * seventiesQuestions.length
         questionElement.innerText = question.question
-        // console.log(seventiesQuestions[i].answers)
         let button = document.createElement("button")
         button.innerText = question.answers[i].text
         button.classList.add("btn")
         if (question.answers[i].correct) {
             button.dataset.correct = question.answers[i].correct
         }
+        else if (gameStatus = false) {
+       button.innerText = " "
+       }
         button.addEventListener("click", selectAnswer)
         answerButtonsElement.appendChild(button) 
     }
@@ -406,9 +408,11 @@ function clearStatusClass(element) {
 }
 
 function gameOver(event) {
+    questionContainerElement.classList.add("hide")
     startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
     nextButton.classList.add("hide")
     startButton.addEventListener("click", location.reload.bind(location))
+    gameStatus = false
     
 }
