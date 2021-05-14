@@ -227,11 +227,6 @@ nextButton.addEventListener("click", () => {
         currentQuestionIndex = 0
         currentQuestionsAsk = 0
     }
-    // if (currentDecadeScore == 2) {
-    //     currentQuestionIndex = 0
-    //     decadeCounter++
-    //     currentQuestionsAsk = []
-    // }
     if (decadeCounter == 0) {
         setNextSeventiesQuestion()
     }
@@ -258,7 +253,6 @@ function startGame() {
     currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
     questionContainerElement.classList.remove("hide")
     console.log(currentQuestionIndex);
-    // currentQuestionsAsk.push(currentQuestionIndex)
     setNextSeventiesQuestion(currentQuestionIndex)
 }
 
@@ -340,6 +334,7 @@ function selectAnswer(e) {
         currentDecadeScore += 1
         console.log(currentDecadeScore);
         totalScore.innerText = currentDecadeScore
+    }
 }
 
 function setStatusClass(element, correct) {
@@ -356,7 +351,7 @@ function clearStatusClass(element) {
     element.classList.remove("wrong")
 }
 
-function gameOver(e) {
+function gameOver(event) {
     startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
     nextButton.classList.add("hide")
