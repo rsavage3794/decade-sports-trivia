@@ -196,6 +196,7 @@ let tensQuestions = [
 ]
 
 let allQuestions = [seventiesQuestions, eightiesQuestions, ninetiesQuestions, zerosQuestions, tensQuestions]
+let allQuestionsCopy = [...allQuestions]
 
 let startButton = document.getElementById("start-btn")
 let nextButton = document.getElementById("next-btn")
@@ -206,11 +207,10 @@ let totalScore = document.getElementById("score")
 
 let randomQuestions
 let currentQuestionIndex
-let currentDecadeScore = 0
+let currentScore = 0
 
 var innerScore = document.querySelector(".game-score")
 
-let score = 0
 let decadeCounter = 0
 
 // Click "Start" to start the game
@@ -218,21 +218,63 @@ startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
     console.log(currentQuestionsAsk);
     currentQuestionIndex++
-    if (currentQuestionsAsk.length == 4 && currentDecadeScore >= 2) {
-        currentQuestionIndex = 0
+    if (currentQuestionsAsk.length == 4) {
         decadeCounter++
-        currentQuestionsAsk = []
+        // if(currentScore >= 2) {
+        //     currentQuestionIndex = 0
+        //     currentQuestionsAsk = []
+        // }else {
+        //     startButton.innerText = "Try Again"
+        //     startButton.classList.remove("hide")
+        //     nextButton.classList.add("hide")
+        // }
     }
-    if (currentQuestionsAsk.length == 4 && currentDecadeScore < 2) {
-        startButton.innerText = "Try Again"
-        startButton.classList.remove("hide")
-        nextButton.classList.add("hide")
-        // currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
-        // questionContainerElement.classList.remove("hide")
-        // decadeCounter = 0
-        // currentQuestionsAsk = []
-        // setNextSeventiesQuestion(currentQuestionIndex)
+    if (currentQuestionsAsk.length == 8) {
+        decadeCounter++
+        // if(currentScore >= 4) {
+        //     currentQuestionIndex = 0
+        //     currentQuestionsAsk = []
+        // }else {
+        //     startButton.innerText = "Try Again"
+        //     startButton.classList.remove("hide")
+        //     nextButton.classList.add("hide")
+        // }
     }
+    if (currentQuestionsAsk.length == 12) {
+        decadeCounter++
+        // if(currentScore >= 6) {
+        //     currentQuestionIndex = 0
+        //     currentQuestionsAsk = []
+        // }else {
+        //     startButton.innerText = "Try Again"
+        //     startButton.classList.remove("hide")
+        //     nextButton.classList.add("hide")
+        // }
+    }
+    if (currentQuestionsAsk.length == 16) {
+        decadeCounter++
+        // if(currentScore >= 8) {
+        //     currentQuestionIndex = 0
+        //     currentQuestionsAsk = []
+        // }else {
+        //     startButton.innerText = "Try Again"
+        //     startButton.classList.remove("hide")
+        //     nextButton.classList.add("hide")
+        // }
+    }
+    if (currentQuestionsAsk.length == 20) {
+            gameOver()
+    }
+    // if (currentQuestionsAsk.length == 4 && currentScore < 2) {
+    //     startButton.innerText = "Try Again"
+    //     startButton.classList.remove("hide")
+    //     nextButton.classList.add("hide")
+    //     currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
+    //     questionContainerElement.classList.remove("hide")
+    //     decadeCounter = 0
+    //     currentQuestionsAsk = []
+    //     setNextSeventiesQuestion(currentQuestionIndex)
+    // }
     if (decadeCounter == 0) {
         setNextSeventiesQuestion()
     }
@@ -253,8 +295,15 @@ nextButton.addEventListener("click", () => {
     }
 })
 
+function resetGame() {
+    console.log("reset")
+    allQuestions = allQuestionsCopy;
+}
+
 // First question appears (randomly because of the randomQuestions function)
 function startGame() {
+    decadeCounter = 0
+    currentQuestionsAsk = []
     startButton.classList.add("hide")
     currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
     questionContainerElement.classList.remove("hide")
@@ -320,6 +369,7 @@ function resetState() {
     }
 }
 
+let decadeScore = 0
 function selectAnswer(e) {
     currentQuestionsAsk.push(currentQuestionIndex)
     let selectedButton = e.target
@@ -335,8 +385,9 @@ function selectAnswer(e) {
         startButton.classList.remove("hide")
     } 
     if (correct) {
-        currentDecadeScore += 1
-        totalScore.innerText = currentDecadeScore
+        currentScore += 1
+        decadeScore++
+        totalScore.innerText = currentScore
     }
 }
 
@@ -358,4 +409,5 @@ function gameOver(event) {
     startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
     nextButton.classList.add("hide")
+    startButton.addEventListener("click", setTimeout(location.reload.bind(location), 10000))
 }
