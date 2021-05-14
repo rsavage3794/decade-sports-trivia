@@ -218,15 +218,19 @@ startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
     console.log(currentQuestionsAsk);
     currentQuestionIndex++
-    if (4 == currentQuestionsAsk.length && currentDecadeScore >= 2) {
+    if (currentQuestionsAsk.length == 4) {
         currentQuestionIndex = 0
         decadeCounter++
         currentQuestionsAsk = []
     }
-    if (4 == currentQuestionsAsk.length && currentDecadeScore < 2) { 
-        currentQuestionIndex = 0
-        currentQuestionsAsk = 0
-    }
+    // if (currentQuestionsAsk.length == 4 && currentDecadeScore < 2) {
+    //     startButton.innerText = "Try Again"
+    //     startButton.classList.remove("hide")
+    //     nextButton.classList.add("hide") 
+    //     currentQuestionIndex = 0
+    //     decadeCounter = 0
+    //     currentQuestionsAsk = []
+    // }
     if (decadeCounter == 0) {
         setNextSeventiesQuestion()
     }

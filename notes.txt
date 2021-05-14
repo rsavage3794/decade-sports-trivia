@@ -15,6 +15,10 @@ how to commit to personal github
     git commit -m "decade-sport-trivia"
     git push origin main
 
-    viewable on mobile
     text display on right/wrong answer
     make it so that player has to get at least 2 questions right in order to move on to the next decade
+
+    get too many wrong in a row there's an error
+    go to play again there's an error
+
+    line 221 && currentDecadeScore >= 2
