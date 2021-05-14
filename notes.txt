@@ -22,3 +22,5 @@ how to commit to personal github
     go to play again there's an error
 
     line 221 && currentDecadeScore >= 2
+
+    test
