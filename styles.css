@@ -109,9 +109,13 @@ h1 {
     display: flex;
     position: absolute;
     color: white;
-    padding: 800px 0 0px 1100px;
+    padding: 70% 0 0px 80%;
     font-size: 2vw;
     text-align: center;
+}
+
+#score {
+
 }
 
 @media screen and (max-width: 600px) {

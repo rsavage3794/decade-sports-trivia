@@ -295,10 +295,10 @@ nextButton.addEventListener("click", () => {
     }
 })
 
-function resetGame() {
-    console.log("reset")
-    allQuestions = allQuestionsCopy;
-}
+// function resetGame() {
+//     console.log("reset")
+//     allQuestions = allQuestionsCopy;
+// }
 
 // First question appears (randomly because of the randomQuestions function)
 function startGame() {
@@ -409,5 +409,6 @@ function gameOver(event) {
     startButton.innerText = "Play Again?"
     startButton.classList.remove("hide")
     nextButton.classList.add("hide")
-    startButton.addEventListener("click", setTimeout(location.reload.bind(location), 10000))
+    startButton.addEventListener("click", location.reload.bind(location))
+    
 }
