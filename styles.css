@@ -116,6 +116,6 @@ h1 {
 
 @media  and (max-width: 600px) {
     .title {
-        font-size: 1rem
+        font-size: 1rem;
     }
 }
