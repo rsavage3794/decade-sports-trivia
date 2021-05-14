@@ -261,7 +261,6 @@ function setNextSeventiesQuestion() {
     resetState()
     let q = seventiesQuestions.splice(Math.floor(Math.random() * seventiesQuestions.length), 1)
     showQuestion(q[0])
-    console.log(q);
 }
 
 function setNextEightiesQuestion() {
@@ -305,7 +304,6 @@ function showQuestion(question) {
     }
 }
 
-
 // next button disappears once a new question is displayed
 function resetState() {
     clearStatusClass(document.body)
@@ -332,7 +330,6 @@ function selectAnswer(e) {
     } 
     if (correct) {
         currentDecadeScore += 1
-        console.log(currentDecadeScore);
         totalScore.innerText = currentDecadeScore
     }
 }
