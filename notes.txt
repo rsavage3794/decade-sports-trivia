@@ -8,13 +8,13 @@ nextBox.addEventListener
 
 
 Need Help with:
-text display on right/wrong answer
-separating questions by decade if possible
-wrong answer count
+
 
 how to commit to personal github
     git add .
     git commit -m "decade-sport-trivia"
     git push origin main
 
+    viewable on mobile
+    text display on right/wrong answer
     make it so that player has to get at least 2 questions right in order to move on to the next decade

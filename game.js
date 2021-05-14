@@ -340,7 +340,6 @@ function selectAnswer(e) {
         currentDecadeScore += 1
         console.log(currentDecadeScore);
         totalScore.innerText = currentDecadeScore
-    }
 }
 
 function setStatusClass(element, correct) {
