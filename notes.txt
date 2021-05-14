@@ -15,7 +15,6 @@ how to commit to personal github
     git commit -m "decade-sport-trivia"
     git push origin main
 
-CSS with score
 gameOver function
 
 responsive CSS - when you resize the page
