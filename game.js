@@ -34,6 +34,24 @@ let seventiesQuestions = [
             { text: "Philadelphia Flyers", correct: false },
             { text: "New York Islanders", correct: false }
         ]
+    },
+    {    
+        question: "Which Premier League club won the First Division title by one point over the Queens Park Rangers in 1975?",
+        answers: [
+            { text: "Tottenham Hotspur", correct: false },
+            { text: "Liverpool", correct: true },
+            { text: "Manchester United", correct: false },
+            { text: "Everton", correct: false }
+        ]
+    },
+    {    
+        question: "Who won The Open Championship in 1973?",
+        answers: [
+            { text: "Johnny Miller", correct: false },
+            { text: "Jack Nicklaus", correct: false },
+            { text: "Billy Casper", correct: false },
+            { text: "Tom Weiskopf", correct: true }
+        ]
     }
 ]
 
@@ -75,6 +93,24 @@ let eightiesQuestions = [
             { text: "Cleveland Cavaliers & Dallas Mavericks", correct: false },
             { text: "Houston Rockets & Portland Trail Blazers", correct: true }
         ]
+    },
+    {    
+        question: "Which club were runners up in the First Division in 1980-1981 and 1981-1982?",
+        answers: [
+            { text: "Ipswich Town", correct: true },
+            { text: "Manchester United", correct: false },
+            { text: "Manchester City", correct: false },
+            { text: "West Ham United", correct: false }
+        ]
+    },
+    {    
+        question: "What golfer won back to back US Opens in 1988 and 1989?",
+        answers: [
+            { text: "Tom Watson", correct: false },
+            { text: "Jack Nicklaus", correct: false },
+            { text: "Greg Norman", correct: false },
+            { text: "Curtis Strange", correct: true }
+        ]
     }
 ]
 
@@ -113,6 +149,24 @@ let ninetiesQuestions = [
             { text: "New England Patriots", correct: true },
             { text: "Dallas Cowboys", correct: false },
             { text: "Indianapolis Colts", correct: false }
+        ]
+    },
+    {    
+        question: "Which club won the Premier League in its inaugural season in 1992-1993 and went on to win 5 more titles in the decade?",
+        answers: [
+            { text: "Newcastle United", correct: false },
+            { text: "Manchester United", correct: true },
+            { text: "Arsenal", correct: false },
+            { text: "Chelsea", correct: false }
+        ]
+    },
+    {    
+        question: "Which golfer won both The Open Championship and the Masters in 1998?",
+        answers: [
+            { text: "John Daly", correct: false },
+            { text: "Vijay Singh", correct: false },
+            { text: "Ernie Els", correct: false },
+            { text: "Mark O'Meara", correct: true }
         ]
     }
 ]
@@ -153,6 +207,24 @@ let zerosQuestions = [
             { text: "Roberto Luongo", correct: false },
             { text: "Ed Belfour", correct: false }
         ]
+    },
+    {    
+        question: "Who led the Premier League in goals in 2006-2007?",
+        answers: [
+            { text: "Cristiano Ronaldo", correct: false },
+            { text: "Didier Drogba", correct: true },
+            { text: "Wayne Rooney", correct: false },
+            { text: "Benni McCarthy", correct: false }
+        ]
+    },
+    {    
+        question: "Tiger Woods won 3 out of 4 major championships in 2000 coming in 5th place in the Masters. Who won the Masters in 2000?",
+        answers: [
+            { text: "Ernie Els", correct: true },
+            { text: "David Duval", correct: false },
+            { text: "Phil Mickelson", correct: false },
+            { text: "Vijay Singh", correct: true }
+        ]
     }
 ]
 
@@ -192,6 +264,24 @@ let tensQuestions = [
             { text: "2018 New England Patriots", correct: false },
             { text: "2011 New York Giants", correct: true }
         ]
+    },
+    {
+        question: "Which Premier League club shocked the sports world by winning the league title at 5000-1 odds in 2015-2016?",
+        answers: [
+            { text: "Everton", correct: false },
+            { text: "West Ham United", correct: false },
+            { text: "Leicester City", correct: true },
+            { text: "Stoke City", correct: false }
+        ]
+    },
+    {
+        question: "Which golfer came from three strokes back on the final day to win the 2018 Open Championship?",
+        answers: [
+            { text: "Kevin Kisner", correct: false },
+            { text: "Francesco Molinari", correct: true },
+            { text: "Rory McIlroy", correct: false },
+            { text: "Justin Rose", correct: true }
+        ]
     }
 ]
 
@@ -206,6 +296,8 @@ let answerButtonsElement = document.getElementById("answer-buttons")
 let totalScore = document.getElementById("score")
 let gameStatus = false
 
+let wrongAnswersinDedade = 0;
+
 let currentQuestionIndex
 let currentScore = 0
 
@@ -218,7 +310,7 @@ startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
     console.log(currentQuestionsAsk);
     currentQuestionIndex++
-    if (currentQuestionsAsk.length == 4) {
+    if (currentQuestionsAsk.length == 6) {
         decadeCounter++
         // if(currentScore >= 2) {
         //     currentQuestionIndex = 0
@@ -229,7 +321,7 @@ nextButton.addEventListener("click", () => {
         //     nextButton.classList.add("hide")
         // }
     }
-    if (currentQuestionsAsk.length == 8) {
+    if (currentQuestionsAsk.length == 12) {
         decadeCounter++
         // if(currentScore >= 4) {
         //     currentQuestionIndex = 0
@@ -240,7 +332,7 @@ nextButton.addEventListener("click", () => {
         //     nextButton.classList.add("hide")
         // }
     }
-    if (currentQuestionsAsk.length == 12) {
+    if (currentQuestionsAsk.length == 18) {
         decadeCounter++
         // if(currentScore >= 6) {
         //     currentQuestionIndex = 0
@@ -251,7 +343,7 @@ nextButton.addEventListener("click", () => {
         //     nextButton.classList.add("hide")
         // }
     }
-    if (currentQuestionsAsk.length == 16) {
+    if (currentQuestionsAsk.length == 24) {
         decadeCounter++
         // if(currentScore >= 8) {
         //     currentQuestionIndex = 0
@@ -262,7 +354,7 @@ nextButton.addEventListener("click", () => {
         //     nextButton.classList.add("hide")
         // }
     }
-    if (currentQuestionsAsk.length == 20) {
+    if (currentQuestionsAsk.length == 30) {
             gameOver()
     }
     // if (currentQuestionsAsk.length == 4 && currentScore < 2) {
@@ -376,6 +468,10 @@ function selectAnswer(e) {
     currentQuestionsAsk.push(currentQuestionIndex)
     let selectedButton = e.target
     let correct = selectedButton.dataset.correct
+
+    if (!correct) {
+        wrongAnswersinDecade++;
+    }
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
@@ -390,6 +486,10 @@ function selectAnswer(e) {
         currentScore += 1
         decadeScore++
         totalScore.innerText = currentScore
+    }
+    if (wrongAnswersinDedade > 3) {
+        gameOver();
+        return;
     }
 }
 
