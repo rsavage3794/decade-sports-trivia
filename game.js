@@ -1,518 +1,166 @@
-let seventiesQuestions = [
-    {
-        question: "Who won the most NBA MVP awards in the 1970s?",
-        answers: [
-            { text: "Moses Malone", correct: false },
-            { text: "Jerry West", correct: false },
-            { text: "Dave Cowens", correct: false },
-            { text: "Kareem Abdul-Jabbar", correct: true }
-        ]
-    },
-    {
-        question: "Which team won the most Super Bowls in the 1970s?",
-        answers: [
-            { text: "Dallas Cowboys", correct: false },
-            { text: "Pittsburgh Steelers", correct: true },
-            { text: "Oakland Raiders", correct: false },
-            { text: "Miami Dolphins", correct: false }
-        ]
-    },
-    {
-        question: "Which player hit the most homeruns in the 1970s?",
-        answers: [
-            { text: "Dave Kingman", correct: false },
-            { text: "Hank Aaron", correct: false },
-            { text: "Willie Stargell", correct: true },
-            { text: "Reggie Jackson", correct: false }
-        ]
-    },
-    {    
-        question: "Which team won the most Stanley Cups in the 1970s?",
-        answers: [
-            { text: "Montreal Canadiens", correct: true },
-            { text: "Boston Bruins", correct: false },
-            { text: "Philadelphia Flyers", correct: false },
-            { text: "New York Islanders", correct: false }
-        ]
-    },
-    {    
-        question: "Which Premier League club won the First Division title by one point over the Queens Park Rangers in 1975?",
-        answers: [
-            { text: "Tottenham Hotspur", correct: false },
-            { text: "Liverpool", correct: true },
-            { text: "Manchester United", correct: false },
-            { text: "Everton", correct: false }
-        ]
-    },
-    {    
-        question: "Who won The Open Championship in 1973?",
-        answers: [
-            { text: "Johnny Miller", correct: false },
-            { text: "Jack Nicklaus", correct: false },
-            { text: "Billy Casper", correct: false },
-            { text: "Tom Weiskopf", correct: true }
-        ]
-    }
-]
+let allQuestions = {
+    seventiesQuestions: [],
+    eightiesQuestions: [],
+    ninetiesQuestions: [],
+    zerosQuestions: [],
+    tensQuestions: []
+};
+fetch('questions.json')
+    .then(response => response.json())
+    .then(data => {
+        allQuestions = data;
+    });
 
-let currentQuestionsAsk = []
+let currentQuestions = [];
+let currentQuestionIndex = 0;
+let decadeCounter = 0;
+let correctAnswersInDecade = 0;
+let wrongAnswersInDecade = 0;
+let startButton = document.getElementById("start-btn");
+let nextButton = document.getElementById("next-btn");
+let questionContainerElement = document.getElementById("question-container");
+let questionElement = document.getElementById("question");
+let answerButtonsElement = document.getElementById("answer-buttons");
+let totalScore = document.getElementById("score");
+let gameStatus = false;
+let currentScore = 0;
 
-let eightiesQuestions = [
-    {    
-        question: "Which quarterback threw the most touchdown passes in the 1980s?",
-        answers: [
-            { text: "Joe Montana", correct: false },
-            { text: "Dan Marino", correct: true },
-            { text: "Dan Fouts", correct: false },
-            { text: "John Elway", correct: false }
-        ]
-    },
-    {    
-        question: "Which NHL player scored the most goals in the 1980s?",
-        answers: [
-            { text: "Mark Messier", correct: false },
-            { text: "Mario Lemieux", correct: false },
-            { text: "Wayne Gretzky", correct: true },
-            { text: "Jari Kurri", correct: false }
-        ]
-    },
-    {    
-        question: "Which team were the Boston Red Sox playing when Bill Buckner allowed a ground ball to go between his legs during Game 6 of the 1986 World Series?",
-        answers: [
-            { text: "New York Mets", correct: true },
-            { text: "Cincinnati Reds", correct: false },
-            { text: "Atlanta Braves", correct: false },
-            { text: "Philadelphia Phillies", correct: false }
-        ]
-    },
-    {    
-        question: "Which two NBA teams passed on Michael Jordan allowing him to be picked third by the Chicago Bulls in the 1984 NBA Draft?",
-        answers: [
-            { text: "Boston Celtics & Philadelphia 76ers", correct: false },
-            { text: "Los Angeles Lakers & New York Knicks", correct: false },
-            { text: "Cleveland Cavaliers & Dallas Mavericks", correct: false },
-            { text: "Houston Rockets & Portland Trail Blazers", correct: true }
-        ]
-    },
-    {    
-        question: "Which club were runners up in the First Division in 1980-1981 and 1981-1982?",
-        answers: [
-            { text: "Ipswich Town", correct: true },
-            { text: "Manchester United", correct: false },
-            { text: "Manchester City", correct: false },
-            { text: "West Ham United", correct: false }
-        ]
-    },
-    {    
-        question: "What golfer won back to back US Opens in 1988 and 1989?",
-        answers: [
-            { text: "Tom Watson", correct: false },
-            { text: "Jack Nicklaus", correct: false },
-            { text: "Greg Norman", correct: false },
-            { text: "Curtis Strange", correct: true }
-        ]
-    }
-]
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", handleNextQuestion);
 
-let ninetiesQuestions = [
-    {    
-        question: "How many NHL teams were added to the league between 1990 and 1999?",
-        answers: [
-            { text: "0", correct: false },
-            { text: "4", correct: false },
-            { text: "6", correct: true },
-            { text: "3", correct: false }
-        ]
-    },
-    {    
-        question: "Mark McGwire and Sammy Sosa both broke Roger Maris' single season homerun record in 1998. Who was third in homeruns after McGwire and Sosa respectively?",
-        answers: [
-            { text: "Ken Griffey Jr.", correct: true },
-            { text: "Greg Vaughn", correct: false },
-            { text: "Jose Canseco", correct: false },
-            { text: "Alex Rodriguez", correct: false }
-        ]
-    },
-    {    
-        question: "In 1994, which team became the first 8 seed to defeat a 1 seed in the NBA Playoffs?",
-        answers: [
-            { text: "Golden State Warriors", correct: false },
-            { text: "Denver Nuggets", correct: true },
-            { text: "Detroit Pistons", correct: false },
-            { text: "New York Knicks", correct: false }
-        ]
-    },
-    {    
-        question: "In 1990, which NFL team lost 14 straight games after starting the season 1-1?",
-        answers: [
-            { text: "Cleveland Browns", correct: false },
-            { text: "New England Patriots", correct: true },
-            { text: "Dallas Cowboys", correct: false },
-            { text: "Indianapolis Colts", correct: false }
-        ]
-    },
-    {    
-        question: "Which club won the Premier League in its inaugural season in 1992-1993 and went on to win 5 more titles in the decade?",
-        answers: [
-            { text: "Newcastle United", correct: false },
-            { text: "Manchester United", correct: true },
-            { text: "Arsenal", correct: false },
-            { text: "Chelsea", correct: false }
-        ]
-    },
-    {    
-        question: "Which golfer won both The Open Championship and the Masters in 1998?",
-        answers: [
-            { text: "John Daly", correct: false },
-            { text: "Vijay Singh", correct: false },
-            { text: "Ernie Els", correct: false },
-            { text: "Mark O'Meara", correct: true }
-        ]
-    }
-]
-
-let zerosQuestions = [
-    {    
-        question: "What player hit a walk-off homerun in the bottom of the 11th for the New York Yankees in the 2003 ALCS?",
-        answers: [
-            { text: "Jorge Posada", correct: false },
-            { text: "Hideki Matsui", correct: false },
-            { text: "Aaron Boone", correct: true },
-            { text: "Jason Giambi", correct: false }
-        ]
-    },
-    {    
-        question: "Who was the only other future MVP to also be drafted #1 overall in the 2000s besides Lebron James?",
-        answers: [
-            { text: "Kwame Brown", correct: false },
-            { text: "Derrick Rose", correct: true },
-            { text: "Dwight Howard", correct: false },
-            { text: "Yao Ming", correct: false }
-        ]
-    },
-    {    
-        question: "Who won the 2005 NFL MVP award?",
-        answers: [
-            { text: "Shaun Alexander", correct: true },
-            { text: "Peyton Manning", correct: false },
-            { text: "LaDainian Tomlinson", correct: false },
-            { text: "Tom Brady", correct: false }
-        ]
-    },
-    {    
-        question: "Who became the winningest goaltender in NHL history on March 17, 2009?",
-        answers: [
-            { text: "Martin Brodeur", correct: true },
-            { text: "Patrick Roy", correct: false },
-            { text: "Roberto Luongo", correct: false },
-            { text: "Ed Belfour", correct: false }
-        ]
-    },
-    {    
-        question: "Who led the Premier League in goals in 2006-2007?",
-        answers: [
-            { text: "Cristiano Ronaldo", correct: false },
-            { text: "Didier Drogba", correct: true },
-            { text: "Wayne Rooney", correct: false },
-            { text: "Benni McCarthy", correct: false }
-        ]
-    },
-    {    
-        question: "Tiger Woods won 3 out of 4 major championships in 2000 coming in 5th place in the Masters. Who won the Masters in 2000?",
-        answers: [
-            { text: "Ernie Els", correct: true },
-            { text: "David Duval", correct: false },
-            { text: "Phil Mickelson", correct: false },
-            { text: "Vijay Singh", correct: true }
-        ]
-    }
-]
-
-let tensQuestions = [
-    {
-        question: "Who became became the first ever unanimous NBA MVP?",
-        answers: [
-            { text: "Lebron James (2013)", correct: false },
-            { text: "Kevin Durant (2014)", correct: false },
-            { text: "Russell Westbrook (2017)", correct: false },
-            { text: "Stephen Curry (2015)", correct: true }
-        ]
-    },
-    {
-        question: "Which NHL franchise became the first team in nearly 20 years to win back to back Stanley Cups in 2017?",
-        answers: [
-            { text: "Chicago Blackhawks", correct: false },
-            { text: "Los Angeles Kings", correct: false },
-            { text: "Pittsburgh Penguins", correct: true },
-            { text: "Boston Bruins", correct: false }
-        ]
-    },
-    {
-        question: "Who became the first MLB Triple Crown winner in 45 years?",
-        answers: [
-            { text: "Josh Hamilton (2010)", correct: false },
-            { text: "Miguel Cabrera (2012)", correct: true },
-            { text: "Christian Yelich (2019)", correct: false },
-            { text: "Mookie Betts (2018)", correct: false }
-        ]
-    },
-    {
-        question: "Which NFL franchise became the first team with less than 10 regular season wins to win the Super Bowl?",
-        answers: [
-            { text: "2010 Green Bay Packers", correct: false },
-            { text: "2012 Baltimore Ravens", correct: false },
-            { text: "2018 New England Patriots", correct: false },
-            { text: "2011 New York Giants", correct: true }
-        ]
-    },
-    {
-        question: "Which Premier League club shocked the sports world by winning the league title at 5000-1 odds in 2015-2016?",
-        answers: [
-            { text: "Everton", correct: false },
-            { text: "West Ham United", correct: false },
-            { text: "Leicester City", correct: true },
-            { text: "Stoke City", correct: false }
-        ]
-    },
-    {
-        question: "Which golfer came from three strokes back on the final day to win the 2018 Open Championship?",
-        answers: [
-            { text: "Kevin Kisner", correct: false },
-            { text: "Francesco Molinari", correct: true },
-            { text: "Rory McIlroy", correct: false },
-            { text: "Justin Rose", correct: true }
-        ]
-    }
-]
-
-let allQuestions = [seventiesQuestions, eightiesQuestions, ninetiesQuestions, zerosQuestions, tensQuestions]
-let allQuestionsCopy = [...allQuestions]
-
-let startButton = document.getElementById("start-btn")
-let nextButton = document.getElementById("next-btn")
-let questionContainerElement = document.getElementById("question-container")
-let questionElement = document.getElementById("question")
-let answerButtonsElement = document.getElementById("answer-buttons")
-let totalScore = document.getElementById("score")
-let gameStatus = false
-
-let wrongAnswersinDedade = 0;
-
-let currentQuestionIndex
-let currentScore = 0
-
-var innerScore = document.querySelector(".game-score")
-
-let decadeCounter = 0
-
-// Click "Start" to start the game
-startButton.addEventListener("click", startGame)
-nextButton.addEventListener("click", () => {
-    console.log(currentQuestionsAsk);
-    currentQuestionIndex++
-    if (currentQuestionsAsk.length == 6) {
-        decadeCounter++
-        // if(currentScore >= 2) {
-        //     currentQuestionIndex = 0
-        //     currentQuestionsAsk = []
-        // }else {
-        //     startButton.innerText = "Try Again"
-        //     startButton.classList.remove("hide")
-        //     nextButton.classList.add("hide")
-        // }
-    }
-    if (currentQuestionsAsk.length == 12) {
-        decadeCounter++
-        // if(currentScore >= 4) {
-        //     currentQuestionIndex = 0
-        //     currentQuestionsAsk = []
-        // }else {
-        //     startButton.innerText = "Try Again"
-        //     startButton.classList.remove("hide")
-        //     nextButton.classList.add("hide")
-        // }
-    }
-    if (currentQuestionsAsk.length == 18) {
-        decadeCounter++
-        // if(currentScore >= 6) {
-        //     currentQuestionIndex = 0
-        //     currentQuestionsAsk = []
-        // }else {
-        //     startButton.innerText = "Try Again"
-        //     startButton.classList.remove("hide")
-        //     nextButton.classList.add("hide")
-        // }
-    }
-    if (currentQuestionsAsk.length == 24) {
-        decadeCounter++
-        // if(currentScore >= 8) {
-        //     currentQuestionIndex = 0
-        //     currentQuestionsAsk = []
-        // }else {
-        //     startButton.innerText = "Try Again"
-        //     startButton.classList.remove("hide")
-        //     nextButton.classList.add("hide")
-        // }
-    }
-    if (currentQuestionsAsk.length == 30) {
-            gameOver()
-    }
-    // if (currentQuestionsAsk.length == 4 && currentScore < 2) {
-    //     startButton.innerText = "Try Again"
-    //     startButton.classList.remove("hide")
-    //     nextButton.classList.add("hide")
-    //     currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
-    //     questionContainerElement.classList.remove("hide")
-    //     decadeCounter = 0
-    //     currentQuestionsAsk = []
-    //     setNextSeventiesQuestion(currentQuestionIndex)
-    // }
-    if (decadeCounter == 0) {
-        setNextSeventiesQuestion()
-    }
-    if (decadeCounter == 1) {
-    setNextEightiesQuestion()
-    }    
-    if (decadeCounter == 2) {
-        setNextNinetiesQuestion()
-    }
-    if (decadeCounter == 3) {
-        setNextZerosQuestion()
-    }
-    if (decadeCounter == 4) {
-        setNextTensQuestion()
-    }
-    if (decadeCounter > 4) {
-        gameOver()
-    }
-})
-
-// function resetGame() {
-//     console.log("reset")
-//     allQuestions = allQuestionsCopy;
-// }
-
-// First question appears (randomly because of the randomQuestions function)
 function startGame() {
-    gameStatus = true
-    decadeCounter = 0
-    currentQuestionsAsk = []
-    startButton.classList.add("hide")
-    currentQuestionIndex = Math.floor(Math.random() * seventiesQuestions.length)
-    questionContainerElement.classList.remove("hide")
-    console.log(currentQuestionIndex);
-    setNextSeventiesQuestion(currentQuestionIndex)
+    console.log("Starting game...");
+    gameStatus = true;
+    decadeCounter = 0;
+    correctAnswersInDecade = 0;
+    wrongAnswersInDecade = 0;
+    currentScore = 0;
+    totalScore.innerText = currentScore;
+
+    // Hide start button and show the question container
+    startButton.classList.add('hide');
+    questionContainerElement.classList.remove('hide');
+
+    currentQuestions = allQuestions.seventiesQuestions;
+    currentQuestionIndex = 0;
+    showQuestion(currentQuestions[currentQuestionIndex]);
+    hideGameOverContainer();
 }
 
-// Once next is clicked - player is redirected to next random question
-function setNextSeventiesQuestion() {
-    resetState()
-    let q = seventiesQuestions.splice(Math.floor(Math.random() * seventiesQuestions.length), 1)
-    showQuestion(q[0])
+function hideGameOverContainer() {
+    gameOverContainer.classList.add('hide');
 }
 
-function setNextEightiesQuestion() {
-    resetState()
-    let q = eightiesQuestions.splice(Math.floor(Math.random() * eightiesQuestions.length), 1)
-    showQuestion(q[0])
-}
-
-function setNextNinetiesQuestion() {
-    resetState()
-    let q = ninetiesQuestions.splice(Math.floor(Math.random() * ninetiesQuestions.length), 1)
-    showQuestion(q[0])
-}
-
-function setNextZerosQuestion() {
-    resetState()
-    let q = zerosQuestions.splice(Math.floor(Math.random() * zerosQuestions.length), 1)
-    showQuestion(q[0])
-}
-
-function setNextTensQuestion() {
-    resetState()
-    let q = tensQuestions.splice(Math.floor(Math.random() * tensQuestions.length), 1)
-    showQuestion(q[0])
-}
-
-// display question and answers - allows player to click on answers
 function showQuestion(question) {
-    for (let i = 0; i < question.answers.length; i++) {
-        questionElement.innerText = question.question
-        let button = document.createElement("button")
-        button.innerText = question.answers[i].text
-        button.classList.add("btn")
-        if (question.answers[i].correct) {
-            button.dataset.correct = question.answers[i].correct
+    resetState();
+    questionElement.innerText = question.question;
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
         }
-        else if (gameStatus = false) {
-       button.innerText = " "
-       }
-        button.addEventListener("click", selectAnswer)
-        answerButtonsElement.appendChild(button) 
-    }
+        button.addEventListener('click', selectAnswer);
+        answerButtonsElement.appendChild(button);
+    });
 }
 
-// next button disappears once a new question is displayed
 function resetState() {
-    clearStatusClass(document.body)
-    nextButton.classList.add("hide")
+    clearStatusClass(document.body);
+    nextButton.classList.add('hide');
     while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild
-        (answerButtonsElement.firstChild)
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
-let decadeScore = 0
 function selectAnswer(e) {
-    currentQuestionsAsk.push(currentQuestionIndex)
-    let selectedButton = e.target
-    let correct = selectedButton.dataset.correct
-
-    if (!correct) {
-        wrongAnswersinDecade++;
-    }
-    setStatusClass(document.body, correct)
+    const selectedButton = e.target;
+    const correct = selectedButton.dataset.correct === "true";
+    setStatusClass(document.body, correct);
     Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
-    if (allQuestions.length > decadeCounter) {
-        nextButton.classList.remove("hide")
-    } else {
-        startButton.innerText = "Restart"
-        startButton.classList.remove("hide")
-    } 
+        setStatusClass(button, button.dataset.correct === "true");
+    });
     if (correct) {
-        currentScore += 1
-        decadeScore++
-        totalScore.innerText = currentScore
+        correctAnswersInDecade++;
+        currentScore++;
+        totalScore.innerText = currentScore;
+    } else {
+        wrongAnswersInDecade++;
     }
-    if (wrongAnswersinDedade > 3) {
-        gameOver();
-        return;
-    }
+
+    nextButton.classList.remove('hide');
 }
 
 function setStatusClass(element, correct) {
-    clearStatusClass(element)
+    clearStatusClass(element);
     if (correct) {
-        element.classList.add("correct")
+        element.classList.add('correct');
     } else {
-        element.classList.add("wrong")
+        element.classList.add('wrong');
     }
 }
 
 function clearStatusClass(element) {
-    element.classList.remove("correct")
-    element.classList.remove("wrong")
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
 }
 
-function gameOver(event) {
-    questionContainerElement.classList.add("hide")
-    startButton.innerText = "Play Again?"
-    startButton.classList.remove("hide")
-    nextButton.classList.add("hide")
-    startButton.addEventListener("click", location.reload.bind(location))
-    gameStatus = false
+function handleNextQuestion() {
+    currentQuestionIndex++;
+    if (correctAnswersInDecade >= 3) {
+        // Move to next decade
+        decadeCounter++;
+        if (decadeCounter < Object.keys(allQuestions).length) {
+            currentQuestions = allQuestions[Object.keys(allQuestions)[decadeCounter]];
+            correctAnswersInDecade = 0;
+            wrongAnswersInDecade = 0;
+            currentQuestionIndex = 0;
+            showQuestion(currentQuestions[currentQuestionIndex]);
+        } else {
+            // End game
+            endGame();
+        }
+    } else if (wrongAnswersInDecade >= 3) {
+        // End game if wrong answers in current decade reach 3
+        endGame();
+    } else if (currentQuestionIndex < currentQuestions.length) {
+        showQuestion(currentQuestions[currentQuestionIndex]);
+    } else {
+        // If questions run out in current decade but haven't answered 3 correctly
+        endGame();
+    }
+}
+
+
+
+function endGame() {
+    // Hide next button
+    nextButton.classList.add("hide");
+
+    // Game over message and score
+    questionElement.innerText = "Game Over";
+    answerButtonsElement.innerHTML = `
+        <button id="restart-btn" class="start-btn btn">Restart</button>
+    `;
     
+    // Event listener for restart button
+    const restartButton = document.getElementById("restart-btn");
+    restartButton.addEventListener("click", () => {
+        startGame();
+    });
+}
+
+function gameOver() {
+    // Display game over message and score
+    questionElement.innerText = "Game Over";
+    answerButtonsElement.innerHTML = `
+        <button id="restart-btn" class="start-btn btn">Restart</button>
+    `;
+    
+    // Event listener for restart button
+    const restartButton = document.getElementById("restart-btn");
+    restartButton.addEventListener("click", () => {
+        startGame();
+    });
 }

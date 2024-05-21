@@ -109,14 +109,21 @@ h1 {
     display: flex;
     position: absolute;
     color: white;
-    padding: 70% 0 0px 80%;
-    font-size: 2vw;
+    padding: 0 0 35% 0;
+    font-size: 8vw;
     text-align: center;
 }
 
-#score {
-
+h3 {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
 }
+
+#restart-btn {
+    margin-left: 50%;
+}
+
 
 @media screen and (max-width: 600px) {
     html, body {
@@ -128,14 +135,7 @@ h1 {
         justify-content: center;
     }
     
-    /* body {
-        flex-direction: column;
-    }
     h1 {
-        padding: 0 6000px 500px 0;
+        padding: 0 0 110% 0;
     }
-    h2 {
-        padding: 0 0 600px 0;
-        font-size: 1rem;
-    } */
 }
